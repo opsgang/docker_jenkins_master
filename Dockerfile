@@ -11,7 +11,8 @@ LABEL \
     version="1.0.0" \
     description="creates jenkins to run as master"
 
-ENV JENKINS_OPTS="--webroot=/var/cache/jenkins/war"     \
+ENV DEBIAN_FRONTEND=noninteractive \
+    JENKINS_OPTS="--webroot=/var/cache/jenkins/war" \
     DOCKER_APT_URI="https://apt.dockerproject.org/repo" \
     DOCKER_VERSION="1.12.3-0" \
     JENKINS_DIRS="/var/cache/jenkins" \
@@ -19,7 +20,7 @@ ENV JENKINS_OPTS="--webroot=/var/cache/jenkins/war"     \
 
 USER root
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+RUN apt-get update \
     && apt-get install -y apt-transport-https ca-certificates \
     && apt-key adv \
         --keyserver hkp://p80.pool.sks-keyservers.net:80 \
