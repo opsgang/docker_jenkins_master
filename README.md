@@ -2,7 +2,10 @@
 <!--
     vim: et sr sw=4 ts=4 smartindent syntax=markdown:
 -->
+
 _... creates a jenkins container with docker engine ..._
+
+Built @ shippable.com [![Run Status](https://api.shippable.com/projects/589464f08d80360f008b7550/badge?branch=master)](https://app.shippable.com/github/opsgang/docker_jenkins_master)
 
 It is intended to run mounting the docker daemon on the host.
 
