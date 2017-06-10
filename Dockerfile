@@ -1,22 +1,20 @@
 # vim: et sr sw=4 ts=4 smartindent syntax=dockerfile:
 FROM jenkins:latest
 
-# build.sh will use envsubst to replace all env vars in the
-# LABEL instruction.
-#
-MAINTAINER jinal--shah <jnshah@gmail.com>
 LABEL \
     name="jenkins_master" \
     vendor="sortuniq" \
     version="1.0.0" \
     description="creates jenkins to run as master"
 
-ENV DEBIAN_FRONTEND=noninteractive \
-    JENKINS_OPTS="--webroot=/var/cache/jenkins/war" \
+ENV \
+    CLEANUP_DIRS="/var/cache/apt/archives/ /var/lib/apt/*" \
+    DEBIAN_FRONTEND=noninteractive \
     DOCKER_APT_URI="https://apt.dockerproject.org/repo" \
-    DOCKER_VERSION="1.12.3-0" \
+    DOCKER_GID="233" \
+    DOCKER_VERSION="1.12.6-0~debian-jessie" \
     JENKINS_DIRS="/var/cache/jenkins" \
-    CLEANUP_DIRS="/var/cache/apt/archives/ /var/lib/apt/*"
+    JENKINS_OPTS="--webroot=/var/cache/jenkins/war"
 
 USER root
 
@@ -27,11 +25,12 @@ RUN apt-get update \
         --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
     && echo "deb ${DOCKER_APT_URI} debian-jessie main" \
         > /etc/apt/sources.list.d/docker.list \
-    && groupadd -g 233 docker \
+    && groupadd -g ${DOCKER_GID} docker \
     && usermod -a -G docker jenkins \
     && apt-get update \
-    && apt-get install -y docker-engine=${DOCKER_VERSION}~jessie \
-    && apt-get install -y jq sudo dnsutils \
+    && apt-get install -y docker-engine=${DOCKER_VERSION} \
+    && apt-get -t jessie-backports install -y jq \
+    && apt-get install -y sudo dnsutils \
     && echo "jenkins ALL=(ALL:ALL) NOPASSWD:/bin/rm" \
         > /etc/sudoers.d/jenkins \
     && sed -i 's/^\( *SendEnv\)/#\1/' /etc/ssh/ssh_config \
