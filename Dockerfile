@@ -2,9 +2,8 @@
 FROM jenkins:latest
 
 LABEL \
-    name="jenkins_master" \
+    name="opsgang/jenkins_master" \
     vendor="sortuniq" \
-    version="1.0.0" \
     description="creates jenkins to run as master"
 
 ENV \
