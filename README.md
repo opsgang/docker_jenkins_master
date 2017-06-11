@@ -9,9 +9,9 @@ Built @ shippable.com [![Run Status](https://api.shippable.com/projects/589464f0
 
 It is intended to run mounting the docker daemon on the host.
 
-**By default, docker group's gid is 233 in the container.**
+> By default, docker group's gid is 233 in the container.
 
-**We try to peg the _stable_ tag's docker-engine version to that used by CoreOS stable.**
+> We try to peg the _stable_ tag's docker-engine version to that used by CoreOS stable.
 
 If you are mounting the docker daemon from the host, the docker group in the container
 must have the same GID as the group id of the docker.sock file on the host.
@@ -25,6 +25,15 @@ the host. Ideally, use the same version.
 
 If you wish to persist JENKINS\_HOME on the host, make sure the dir is writable by
 the jenkins user in the container (uid/gid of 1000)
+
+## DOCKER TAGS
+
+* _x.y.z_: the jenkins version - the most useful if you want to run with a pre-existing
+    JENKINS_HOME backup.
+
+* _YYYYmmddHHMMSS_: timestamp of when image was built.
+
+* _stable,latest_: currently point to the last successfully built image.
 
 ## HOWTO: ... run
 
