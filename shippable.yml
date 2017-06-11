@@ -21,14 +21,17 @@ build:
     - a=$(docker inspect opsgang/jenkins_master:candidate | jq -r '.[].Config.Labels')
     - echo $a | jq . # show me the labels please
     - v=$(echo $a | jq -r '.version')
+    - jv=$(echo $a | jq -r '."opsgang.jenkins_version"')
     - gv=$(echo $a | jq -r '."opsgang.build_git_tag"')
     - echo "version tag is " $v
     - docker tag opsgang/jenkins_master:candidate opsgang/jenkins_master:$v
+    - docker tag opsgang/jenkins_master:candidate opsgang/jenkins_master:$jv
     - docker tag opsgang/jenkins_master:candidate opsgang/jenkins_master:$gv
     - docker tag opsgang/jenkins_master:candidate opsgang/jenkins_master:stable
     - docker tag opsgang/jenkins_master:candidate opsgang/jenkins_master:latest
     - docker login -p $DHP -u $DHU
     - docker push opsgang/jenkins_master:$v
+    - docker push opsgang/jenkins_master:$jv
     - docker push opsgang/jenkins_master:$gv
     - docker push opsgang/jenkins_master:stable
     - docker push opsgang/jenkins_master:latest
